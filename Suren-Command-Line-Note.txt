@@ -1,0 +1,194 @@
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow --info
+[
+    {
+        "key": "version",
+        "value": "3.14.0"
+    },
+    {
+        "key": "default_config_file_path",
+        "value": "C:\\Users\\suren\\AppData\\Local\\snowflake\\config.toml"
+    },
+    {
+        "key": "python_version",
+        "value": "3.10.19 (main, Oct 14 2025, 21:20:23) [MSC v.1944 64 bit (AMD64)]"
+    },
+    {
+        "key": "system_info",
+        "value": "Windows-10-10.0.26100-SP0"
+    },
+    {
+        "key": "feature_flags",
+        "value": {}
+    },
+    {
+        "key": "SNOWFLAKE_HOME",
+        "value": null
+    }
+]
+
+############################################
+Update you Snowflake connection details here:
+
+C:\\Users\\suren\\AppData\\Local\\snowflake\\config.toml
+
+############################################
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow connection test --connection advanced_data_engineering_snowflake
++-----------------------------------------------------------+
+| key             | value                                   |
+|-----------------+-----------------------------------------|
+| Connection name | advanced_data_engineering_snowflake     |
+| Status          | OK                                      |
+| Host            | UQIVURT-DMC84904.snowflakecomputing.com |
+| Account         | UQIVURT-DMC84904                        |
+| User            | SUREN4SNOWFLAKE                         |
+| Role            | ACCOUNTADMIN                            |
+| Database        | not set                                 |
+| Warehouse       | COMPUTE_WH                              |
++-----------------------------------------------------------+
+
+--> CREATE THE STAGING DATABASE
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow git execute @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql -D "env='STAGING'" --database=COURSE_REPO --schema=PUBLIC
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
++----------------------------------------------------------------------------------------------------------------------------------+
+| File                                                                                                           | Status  | Error |
+|----------------------------------------------------------------------------------------------------------------+---------+-------|
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql | SUCCESS | None  |
++----------------------------------------------------------------------------------------------------------------------------------+
+
+--> CREATE THE PROD DATABASE
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow git execute @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql -D "env='PROD'" --database=COURSE_REPO --schema=PUBLIC
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
++----------------------------------------------------------------------------------------------------------------------------------+
+| File                                                                                                           | Status  | Error |
+|----------------------------------------------------------------------------------------------------------------+---------+-------|
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql | SUCCESS | None  |
++----------------------------------------------------------------------------------------------------------------------------------+
+
+
+
+--> Execute all the files under Objects folder
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow git execute @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/ -D "env='STAGING'" --database=COURSE_REPO --schema=PUBLIC
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/database/tasty_bytes.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/fahrenheit_to_celsius.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/inch_to_millimeter.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/sprocs/process_order_headers_stream.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/streams/order_header.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/tables/daily_sales_hamburg.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/views/views.sql
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| File                                                                                                                                 | Status  | Error |
+|--------------------------------------------------------------------------------------------------------------------------------------+---------+-------|
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/database/tasty_bytes.sql                | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/fahrenheit_to_celsius.sql     | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/inch_to_millimeter.sql        | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/sprocs/process_order_headers_stream.sql | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/streams/order_header.sql                | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/tables/daily_sales_hamburg.sql          | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/views/views.sql                         | SUCCESS | None  |
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+--> Execute allthe Object scripts in PROD
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> snow git execute @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/ -D "env='PROD'" --database=COURSE_REPO --schema=PUBLIC
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/database/tasty_bytes.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/fahrenheit_to_celsius.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/inch_to_millimeter.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/sprocs/process_order_headers_stream.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/streams/order_header.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/tables/daily_sales_hamburg.sql
+SUCCESS - @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/views/views.sql
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| File                                                                                                                                 | Status  | Error |
+|--------------------------------------------------------------------------------------------------------------------------------------+---------+-------|
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/database/tasty_bytes.sql                | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/fahrenheit_to_celsius.sql     | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/functions/inch_to_millimeter.sql        | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/sprocs/process_order_headers_stream.sql | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/streams/order_header.sql                | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/tables/daily_sales_hamburg.sql          | SUCCESS | None  |
+| @advanced_data_engineering_snowflake/branches/main/module-1/hamburg_weather/pipeline/objects/views/views.sql                         | SUCCESS | None  |
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git fetch
+From https://github.com/suren4ghub/advanced-data-engineering-snowflake
+ * [new branch]      fix-missing-data -> origin/fix-missing-data
+ * [new branch]      staging          -> origin/staging
+
+
+
+ PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git fetch
+From https://github.com/suren4ghub/advanced-data-engineering-snowflake
+ * [new branch]      fix-missing-data -> origin/fix-missing-data
+ * [new branch]      staging          -> origin/staging
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git switch fix-missing-data
+branch 'fix-missing-data' set up to track 'origin/fix-missing-data'.
+Switched to a new branch 'fix-missing-data'
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git branch
+* fix-missing-data
+  main
+
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git status
+On branch fix-missing-data
+Your branch is up to date with 'origin/fix-missing-data'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vs/
+        Suren-Command-Line-Note.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+
+
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git add -p
+diff --git a/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql b/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
+index 4565f53..7e987b4 100644
+--- a/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
++++ b/module-1/hamburg_weather/pipeline/data/load_tasty_bytes.sql
+@@ -64,7 +64,8 @@ CREATE TABLE {{env}}_tasty_bytes.raw_pos.country
+    iso_currency VARCHAR(3),
+    iso_country VARCHAR(2),
+    city VARCHAR(16777216),
+-   city_population VARCHAR(16777216)
++   city_population VARCHAR(16777216),
++   CITY_ID NUMBER(19,0)
+ );
+
+
+
+ PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git commit -m "commit my new changes"
+[fix-missing-data 919db9c] commit my new changes
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+
+
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git push origin fix-missing-data
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 22 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 640 bytes | 213.00 KiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/suren4ghub/advanced-data-engineering-snowflake.git
+   25a2360..919db9c  fix-missing-data -> fix-missing-data
+
+
+
