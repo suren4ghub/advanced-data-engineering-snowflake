@@ -192,3 +192,19 @@ To https://github.com/suren4ghub/advanced-data-engineering-snowflake.git
 
 
 
+
+
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> Add-Content .gitignore "`n# Visual Studio`n.vs/`n"
+>>
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git rm -r --cached .vs
+>>
+fatal: pathspec '.vs' did not match any files
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git add -A
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+PS C:\Suren\SurenLearn\00 LinkedIn Learnings\Advanced Data Engineering with Snowflake\advanced-data-engineering-snowflake> git commit -m "Ignore Visual Studio cache folder"
+[fix-missing-data d710b9a] Ignore Visual Studio cache folder
+ 3 files changed, 206 insertions(+), 4 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 Suren-Command-Line-Note.txt
+
+
